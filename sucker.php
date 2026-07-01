@@ -1,46 +1,48 @@
 <?php
-// Simple handler for buyagrade form submissions
-// This will append submissions to suckers.html
+$required = ['name', 'section', 'cardnumber', 'cardtype'];
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: buyagrade.html');
-    exit;
+foreach ($required as $field) {
+    if (!isset($_POST[$field]) || trim($_POST[$field]) === '') {
+        echo '<h1>Sorry</h1>';
+        echo '<p>You did not fill out the form completely. <a href="buyagrade.html">Try again?</a></p>';
+        exit;
+    }
 }
 
-$name = htmlspecialchars($_POST['name'] ?? '');
-$email = htmlspecialchars($_POST['email'] ?? '');
-$course = htmlspecialchars($_POST['course'] ?? '');
-$amount = htmlspecialchars($_POST['amount'] ?? '');
-$time = date('Y-m-d H:i:s');
+$name = trim($_POST['name']);
+$section = trim($_POST['section']);
+$cardnumber = trim($_POST['cardnumber']);
+$cardtype = trim($_POST['cardtype']);
 
-$entry = "<li><strong>" . $time . "</strong> - " . $name . " (" . $email . ") paid $" . $amount . " for " . $course . "</li>\n";
+$line = $name . ';' . $section . ';' . $cardnumber . ';' . $cardtype . PHP_EOL;
+file_put_contents('suckers.html', $line, FILE_APPEND);
 
-$file = __DIR__ . '/suckers.html';
+$all = file_get_contents('suckers.html');
+?>
 
-// If file doesn't exist, create with basic HTML structure
-if (!file_exists($file)) {
-    $initial = "<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <title>Suckers</title>\n  <link rel=\"stylesheet\" href=\"index.css\">\n</head>\n<body>\n  <main>\n    <h1>Suckers</h1>\n    <ul id=\"entries\">\n";
-    file_put_contents($file, $initial, LOCK_EX);
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thanks, sucker!</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <main>
+        <h1>Thanks, sucker!</h1>
 
-// Append entry before closing tags
-// Read current content
-$content = file_get_contents($file);
+        <p>Your information has been recorded.</p>
 
-// Insert entry before closing tags
-if (strpos($content, '</ul>') !== false) {
-    $content = str_replace('</ul>', $entry . '</ul>', $content);
-} else {
-    $content .= "<ul id=\"entries\">\n" . $entry . "</ul>\n";
-}
+        <h2>Form input values</h2>
+        <p>Name: <?= htmlspecialchars($name) ?></p>
+        <p>Section: <?= htmlspecialchars($section) ?></p>
+        <p>Card Number: <?= htmlspecialchars($cardnumber) ?></p>
+        <p>Card Type: <?= htmlspecialchars($cardtype) ?></p>
 
-// Ensure closing main/body/html
-if (strpos($content, '</main>') === false) {
-    $content .= "</main>\n</body>\n</html>\n";
-}
+        <h2>The current database contains:</h2>
+        <pre><?= htmlspecialchars($all) ?></pre>
 
-file_put_contents($file, $content, LOCK_EX);
-
-// Redirect back to suckers page
-header('Location: suckers.html');
-exit;
+        <p><a href="buyagrade.html">Submit another response</a></p>
+    </main>
+</body>
+</html>
