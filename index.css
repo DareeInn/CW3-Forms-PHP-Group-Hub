@@ -1,0 +1,20 @@
+/* Basic styles for the CW3 project */
+body {
+  font-family: system-ui, -apple-system, Roboto, "Segoe UI", Arial, sans-serif;
+  margin: 0;
+  padding: 2rem;
+  background: #f7f7f9;
+  color: #111;
+}
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+label { display: block; margin: 0.75rem 0; }
+input { display: block; padding: 0.5rem; width: 100%; box-sizing: border-box; }
+button { padding: 0.6rem 1rem; background: #0b5fff; color: #fff; border: none; border-radius: 6px; cursor: pointer; }
+button:hover { opacity: 0.95; }
