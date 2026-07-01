@@ -6,7 +6,7 @@ Fill in your team details.
 
 Team Member Name
 Team Member: Darin Ward 
-Team Member: Pierre Osei
+Team Member: Koffi djokoe
 ## Project Links
 
 GitHub Repository URL
