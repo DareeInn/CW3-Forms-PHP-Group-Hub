@@ -1,0 +1,16 @@
+# Template
+Complete this page and submit with your project.
+
+## Team Information
+Fill in your team details.
+
+Team Member Name
+Team Member: Darin Ward 
+Team Member: Pierre Osei
+## Project Links
+
+GitHub Repository URL
+https://github.com/DareeInn/CW3-Forms-PHP-Group-Hub
+
+CODD Live Deployment URL
+https://codd.cs.gsu.edu/~dward38/wp/CW/CW3/buyagrade.html
